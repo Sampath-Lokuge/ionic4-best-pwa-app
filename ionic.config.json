@@ -1,7 +1,8 @@
 {
   "name": "bestApp",
   "integrations": {
-    "cordova": {}
+    "cordova": {},
+    "capacitor": {}
   },
   "type": "angular"
 }

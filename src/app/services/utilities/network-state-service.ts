@@ -1,33 +1,34 @@
 import { Injectable } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { Network } from '@ionic-native/network/ngx';
 import { ShowToastService } from './show-toast.service';
+import { Plugins, NetworkStatus, PluginListenerHandle } from '@capacitor/core';
+
+const { Network } = Plugins;
 
 @Injectable({
   providedIn: 'root'
 })
 export class NetworkStateService {
 
-  private connectSubscription$: Subscription = null;
+  networkStatus: NetworkStatus;
+  networkListener: PluginListenerHandle;
+  constructor(private showToastService: ShowToastService) { }
 
-  constructor(private network: Network,
-    private showToastService: ShowToastService) { }
-
-  WatchConnection() {
-    if (this.connectSubscription$) { this.connectSubscription$.unsubscribe(); }
-    this.connectSubscription$ = this.network.onDisconnect().subscribe(() => {
-      this.showToastService.showNetworkStateErrorToast('Your internet seems to be down! Please check your network settings!');
-      if (this.connectSubscription$) { this.connectSubscription$.unsubscribe(); }
-      this.connectSubscription$ = this.network.onConnect().subscribe(() => {
+  async WatchConnection() {
+    this.networkListener = Network.addListener('networkStatusChange', (status) => {
+      this.networkStatus = status;
+      if (!this.networkStatus.connected) {
+        this.showToastService.showNetworkStateErrorToast('Your internet seems to be down! Please check your network settings!');
+      } else {
         setTimeout(() => {
           this.showToastService.toast.dismiss();
-          if (this.network.type === 'wifi' || this.network.type === '4g' || this.network.type === '3g' || this.network.type === '2g' || this.network.type === 'cellular' || this.network.type === 'none') {
+          if (this.networkStatus.connected) {
             this.showToastService.showNetworkStateSuccessToast('Internet connection available!');
-            this.WatchConnection();
           }
         }, 3000);
-      });
+      }
     });
+
+    this.networkStatus = await Network.getStatus();
   }
 
 }

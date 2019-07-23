@@ -30,10 +30,10 @@ export class AppComponent {
   ];
 
   constructor(private platform: Platform,
-              private splashScreen: SplashScreen,
-              private statusBar: StatusBar,
-              private networkStateService: NetworkStateService,
-              private localStorageService: LocalStorageService) {
+    private splashScreen: SplashScreen,
+    private statusBar: StatusBar,
+    private networkStateService: NetworkStateService,
+    private localStorageService: LocalStorageService) {
     this.initializeApp();
   }
 
@@ -41,10 +41,7 @@ export class AppComponent {
     await this.platform.ready();
     this.statusBar.styleDefault();
     this.splashScreen.hide();
-
-    if (this.platform.is('cordova')) {
-      this.networkStateService.WatchConnection();
-    }
+    this.networkStateService.WatchConnection();
   }
 
   logout(p: any) {

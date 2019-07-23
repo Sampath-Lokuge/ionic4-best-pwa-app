@@ -7,7 +7,9 @@ import { ToastController } from '@ionic/angular';
 export class ShowToastService {
   toast: HTMLIonToastElement;
 
-  constructor(private toastCtrl: ToastController, ) { }
+  constructor(private toastCtrl: ToastController, ) {
+    this.toastCtrl.create({ animated: false }).then(t => { t.present(); t.dismiss(); });
+  }
 
   async showNetworkStateErrorToast(data: string) {
     this.toast = await this.toastCtrl.create({
