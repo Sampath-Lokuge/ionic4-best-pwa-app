@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { Platform } from '@ionic/angular';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { NetworkStateService } from './services/utilities/network-state-service';
 import { LocalStorageService } from './services/utilities/local-storage.service';
 
@@ -30,8 +28,6 @@ export class AppComponent {
   ];
 
   constructor(private platform: Platform,
-    private splashScreen: SplashScreen,
-    private statusBar: StatusBar,
     private networkStateService: NetworkStateService,
     private localStorageService: LocalStorageService) {
     this.initializeApp();
@@ -39,8 +35,6 @@ export class AppComponent {
 
   async initializeApp() {
     await this.platform.ready();
-    this.statusBar.styleDefault();
-    this.splashScreen.hide();
     this.networkStateService.WatchConnection();
   }
 
