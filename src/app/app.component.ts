@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { NetworkStateService } from './services/utilities/network-state-service';
 import { LocalStorageService } from './services/utilities/local-storage.service';
+import { NewVersionService } from './services/utilities/new-version.service';
 
 
 @Component({
@@ -29,13 +30,15 @@ export class AppComponent {
 
   constructor(private platform: Platform,
     private networkStateService: NetworkStateService,
-    private localStorageService: LocalStorageService) {
+    private localStorageService: LocalStorageService,
+    private newVersionService: NewVersionService) {
     this.initializeApp();
   }
 
   async initializeApp() {
     await this.platform.ready();
     this.networkStateService.WatchConnection();
+    this.newVersionService.showNewVersion();
   }
 
   logout(p: any) {

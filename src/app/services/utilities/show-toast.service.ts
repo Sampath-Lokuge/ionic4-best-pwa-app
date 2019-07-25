@@ -29,4 +29,20 @@ export class ShowToastService {
     });
     toast.present();
   }
+
+  async showToast(data: string) {
+    const toast = await this.toastCtrl.create({
+      message: data,
+      position: 'bottom',
+      buttons: [
+        {
+          text: 'Load',
+          handler: () => {
+            window.location.reload();
+          }
+        }
+      ]
+    });
+    toast.present();
+  }
 }
