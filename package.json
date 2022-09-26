@@ -22,7 +22,7 @@
     "@angular/pwa": "^0.12.4",
     "@angular/router": "^7.2.2",
     "@angular/service-worker": "^7.2.2",
-    "@capacitor/cli": "1.1.1",
+    "@capacitor/cli": "1.5.3",
     "@capacitor/core": "1.1.1",
     "@ionic-native/core": "^5.0.0",
     "@ionic/angular": "4.6.2",
